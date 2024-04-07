@@ -8,6 +8,7 @@ const app = Vue.createApp({
       monsterHealth: 100,
       playerHealth: 100,
       counterSpacialAttck: 0,
+      winner: null,
     };
   },
   computed: {
@@ -19,6 +20,22 @@ const app = Vue.createApp({
     },
     myUseSpacialAttack() {
       return this.counterSpacialAttck % 3 !== 0;
+    },
+  },
+  watch: {
+    monsterHealth(vlaue) {
+      if (vlaue <= 0 && this.playerHealth <= 0) {
+        this.winner = "draw";
+      } else if (vlaue <= 0) {
+        this.winner = "player";
+      }
+    },
+    playerHealth(vlaue) {
+      if (vlaue <= 0 && this.monsterHealth <= 0) {
+        this.winner = "draw";
+      } else if (vlaue <= 0) {
+        this.winner = "monster";
+      }
     },
   },
   methods: {
@@ -37,6 +54,16 @@ const app = Vue.createApp({
       const attackVlaue = generateRandomValue(15, 25);
       this.monsterHealth -= attackVlaue;
       this.counterSpacialAttck++;
+      this.attackPlayer();
+    },
+    healPlayer() {
+      this.counterSpacialAttck++;
+      const healVlaue = generateRandomValue(10, 25);
+      if (this.healVlaue + this.playerHealth > 100) {
+        this.playerHealth = 100;
+      } else {
+        this.playerHealth += healVlaue;
+      }
       this.attackPlayer();
     },
   },
