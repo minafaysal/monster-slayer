@@ -35,14 +35,15 @@
         <h3 v-if="winner === 'monster'">Monster Won</h3>
         <h3 v-else-if="winner === 'player'">player Won</h3>
         <h3 v-else>it is A draw</h3>
+        <button @click="startNewGame">New Game</button>
       </section>
-      <section id="controls">
+      <section id="controls" v-else>
         <button @click="attackMonster()">ATTACK</button>
         <button :disabled="myUseSpacialAttack" @click="spacialAttack">
           SPECIAL ATTACK
         </button>
         <button @click="healPlayer">HEAL</button>
-        <button>SURRENDER</button>
+        <button @click="surrender">SURRENDER</button>
       </section>
       <section id="log" class="container">
         <h2>Battle Log</h2>
