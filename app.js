@@ -9,6 +9,7 @@ const app = Vue.createApp({
       playerHealth: 100,
       counterSpacialAttck: 0,
       winner: null,
+      logMessages: [],
     };
   },
   computed: {
@@ -58,15 +59,18 @@ const app = Vue.createApp({
       console.log("attackMonster");
       this.monsterHealth -= attackVlaue;
       this.counterSpacialAttck++;
+      this.addLogMessage("player", "attack", this.attackValue);
       this.attackPlayer();
     },
     attackPlayer() {
       const attackVlaue = generateRandomValue(8, 15);
       this.playerHealth -= attackVlaue;
+      this.addLogMessage("monster", "attack", this.attackValue);
     },
     spacialAttack() {
       const attackVlaue = generateRandomValue(15, 25);
       this.monsterHealth -= attackVlaue;
+      this.addLogMessage("player", "attack", this.attackValue);
       this.counterSpacialAttck++;
       this.attackPlayer();
     },
@@ -82,6 +86,13 @@ const app = Vue.createApp({
     },
     surrender() {
       this.winner = "monster";
+    },
+    addLogMessage(who, what, value) {
+      this.logMessages.unshift({
+        actionBy: who,
+        actionType: what,
+        actionValue: value,
+      });
     },
   },
 });
